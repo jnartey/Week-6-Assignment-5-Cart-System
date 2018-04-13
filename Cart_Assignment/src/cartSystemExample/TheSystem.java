@@ -29,7 +29,7 @@ public class TheSystem {
 		String[] lines = null;
 		Item item = new Item();
 		
-        //if(getClass().getSimpleName().equals("AppSystem") == true) {
+        if(getClass().getSimpleName().equals("AppSystem") == true) {
         	try {
     			InputStream = Files.newInputStream(filePath);
     			bufferedReader = new BufferedReader(new InputStreamReader(InputStream));
@@ -52,7 +52,7 @@ public class TheSystem {
     		}finally {
     			
     		}
-        //}
+        }
     }
     
     public HashMap<String, Item> getItemCollection(){
@@ -62,7 +62,7 @@ public class TheSystem {
     
     public void setItemCollection(HashMap<String, Item> copy ){
     	//Fill the code here
-    	copy = itemCollection;
+    	this.itemCollection = copy;
     }
     
     public Boolean add(Item item) {
@@ -75,6 +75,8 @@ public class TheSystem {
     	}else {
     		
     		itemCollection.put(item.getItemName(), item);
+    		this.setItemCollection(itemCollection);
+    		//System.out.println("Testing testing");
     		isAvailable = true;
     	}
     	

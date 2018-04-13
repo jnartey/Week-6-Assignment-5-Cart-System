@@ -60,7 +60,7 @@ public class Item{
 	 * @param quantity the quantity to set
 	 */
 	public void setQuantity(Integer quantity) {
-		this.quantity = quantity + 1;
+		this.quantity = quantity;
 	}
 	/**
 	 * @return the availableQuatity

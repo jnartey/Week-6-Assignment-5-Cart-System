@@ -19,7 +19,9 @@ public class AppSystem extends TheSystem {
     	if(this.getItemCollection().containsKey(item.getItemName())) {
     		System.out.println("Item " + item.getItemName() + " is already in the system");
     	}else {
-    		this.add(item);
+    		HashMap<String, Item> newCollection = this.getItemCollection();
+    		newCollection.put(item.getItemName(), item);
+    		this.setItemCollection(newCollection);
     		isAdded = true;
     	}
     	
