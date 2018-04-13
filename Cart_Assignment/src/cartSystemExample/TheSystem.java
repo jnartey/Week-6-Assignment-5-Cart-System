@@ -86,7 +86,7 @@ public class TheSystem {
         Item item = null;
       //Fill the code here
         if(this.getItemCollection().containsKey(itemName)) {
-        	this.getItemCollection().remove(itemName);
+        	this.itemCollection.remove(itemName);
         	item = this.getItemCollection().get(itemName);
         }
         
