@@ -15,16 +15,14 @@ public class AppSystem extends TheSystem {
     
     public Boolean add(Item item) {
       //Fill the code here
-    	Boolean isAdded = false;
     	if(this.getItemCollection().containsKey(item.getItemName())) {
     		System.out.println("Item " + item.getItemName() + " is already in the system");
+    		return false;
     	}else {
     		HashMap<String, Item> newCollection = this.getItemCollection();
     		newCollection.put(item.getItemName(), item);
     		this.setItemCollection(newCollection);
-    		isAdded = true;
-    	}
-    	
-    	return isAdded;
+    		return true;
+    	}    	
     }
 }

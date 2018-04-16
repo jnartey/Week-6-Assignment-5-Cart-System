@@ -12,7 +12,7 @@ public class CartSystem extends TheSystem{
       //Fill the code here
     	double total = 0;
     	int totalQuantity = 0;
-    	DecimalFormat df = new DecimalFormat("#.00");
+    	DecimalFormat df = new DecimalFormat("#0.00");
     	
 //    	System.out.printf("%-25s | %-25s | %-15s | %-15s", "Item", "Description", "Quantity", "Sub Total");
 //		System.out.println("");
@@ -46,10 +46,25 @@ public class CartSystem extends TheSystem{
         		total += subTotalTax;
         		totalQuantity += item.getValue().getQuantity();
         		
+        		System.out.println(item.getKey() + " " + item.getValue().getItemPrice() + " " + item.getValue().getAvailableQuatity());
         		System.out.println("Sub Total: " + df.format(subTotal));
         		System.out.println("Tax: " + df.format(tax));
         		System.out.println("Total: " + df.format(subTotalTax));
         	}
     	}
+    }
+    
+    public Item remove(String itemName) {
+        Item item = null;
+        
+      //Fill the code here
+        if(this.getItemCollection().containsKey(itemName)) {
+        	HashMap<String, Item> updatedCollection = new HashMap<String, Item>(this.getItemCollection());
+        	updatedCollection.remove(itemName);
+        	this.setItemCollection(updatedCollection);
+        	item = this.getItemCollection().get(itemName);
+        }
+        
+        return item;
     }
 }

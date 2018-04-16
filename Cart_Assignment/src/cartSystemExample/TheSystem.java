@@ -1,7 +1,6 @@
 package cartSystemExample;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class TheSystem {
     private HashMap<String, Item> itemCollection;
@@ -27,7 +25,6 @@ public class TheSystem {
     	filePath = Paths.get("sample.txt");
 		InputStream InputStream;
 		String[] lines = null;
-		Item item = new Item();
 		
         if(getClass().getSimpleName().equals("AppSystem") == true) {
         	try {
@@ -35,13 +32,14 @@ public class TheSystem {
     			bufferedReader = new BufferedReader(new InputStreamReader(InputStream));
     			
     			while(bufferedReader.ready()) {
+    				Item item = new Item();
     				lines = bufferedReader.readLine().split("\\s ");
     				item.setItemName(lines[0]);
     				item.setItemDesc(lines[1]);
     				item.setItemPrice(Double.parseDouble(lines[2]));
     				item.setAvailableQuatity(Integer.parseInt(lines[3]));
     				
-    				itemCollection.put(item.getItemName(), item);
+    				this.itemCollection.put(item.getItemName(), item);
     			}
     			
     			//itemCollection.forEach((k, v) -> System.out.println("key: " + k + " " + v.getItemName() + " " + v.getItemDesc() + " " + v.getItemPrice() + " " + v.getAvailableQuatity()));
@@ -57,7 +55,7 @@ public class TheSystem {
     
     public HashMap<String, Item> getItemCollection(){
     	//Fill the code here
-    	return new HashMap<String, Item>(itemCollection);
+    	return new HashMap<String, Item>(this.itemCollection);
     }
     
     public void setItemCollection(HashMap<String, Item> copy ){
@@ -67,26 +65,42 @@ public class TheSystem {
     
     public Boolean add(Item item) {
     	//Fill the code here
-    	boolean isAvailable = false;
+    	boolean isAdded = false;
     	if(this.getItemCollection().containsKey(item.getItemName())) {
     		if(this.checkAvailability(item, item.getQuantity())) {
-    			isAvailable = false;
+    			this.itemCollection.put(item.getItemName(), item);
+    			this.updateQuantity(item);
+    			this.setItemCollection(this.itemCollection);
+    			isAdded = true;
+    		}else {
+    			isAdded = false;
     		}
     	}else {
-    		
-    		itemCollection.put(item.getItemName(), item);
-    		this.setItemCollection(itemCollection);
-    		//System.out.println("Testing testing");
-    		isAvailable = true;
+    		this.updateQuantity(item);
+    		this.itemCollection.put(item.getItemName(), item);
+    		this.setItemCollection(this.itemCollection);
+    		isAdded = true;
     	}
     	
-    	return isAvailable;
+    	return isAdded;
     }
+    
+    public void updateQuantity(Item item) {
+    	if(this.itemCollection.containsKey(item.getItemName())) {
+    		item.setQuantity(item.getQuantity() + 1);
+    		item.setAvailableQuatity(item.getAvailableQuatity() - 1);
+		}else {
+			item.setQuantity(1);
+			item.setAvailableQuatity(item.getAvailableQuatity() - item.getQuantity());
+		}
+    }
+    
     public Item remove(String itemName) {
         Item item = null;
       //Fill the code here
         if(this.getItemCollection().containsKey(itemName)) {
         	this.itemCollection.remove(itemName);
+        	//this.getItemCollection().remove(itemName);
         	item = this.getItemCollection().get(itemName);
         }
         
